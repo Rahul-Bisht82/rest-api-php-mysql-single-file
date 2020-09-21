@@ -12,9 +12,11 @@
   </head>
   <body>
 
+
 <div class="container">
 <div class="row">
   <div class="col-8 mx-auto">
+
 
  <form id="myForm">
   <div class="mb-3">
@@ -29,6 +31,7 @@
  
   <button type="submit"  class="btn btn-primary">Submit</button>
 </form>
+
 
   </div>
 </div>
@@ -47,7 +50,7 @@
 
 
 
-
+// ------end--
 // pass request object to `fetch()`
  const myForm = document.getElementById('myForm');
   myForm.addEventListener('submit',function(e){
@@ -69,6 +72,7 @@ fetch('api.php',{
 })
     .then(res => res.json())
     .then(data => console.log(data));
+    document.getElementById("myForm").reset();
   });
     </script>
     
