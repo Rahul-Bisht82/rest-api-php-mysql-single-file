@@ -7,7 +7,8 @@ header('content-type: application/json');
 
    switch ( $request) {
    	case 'GET':
-   		getmethod();
+    $data = $_GET['id'];
+   		getmethod($data);
    	break;
    	case 'PUT':
           $data=json_decode(file_get_contents('php://input'),true);
@@ -27,9 +28,14 @@ header('content-type: application/json');
    		break;
    }
 //data read part are here
-function getmethod(){
+function getmethod($data){
   include "db.php";
+  if($data == ''){ 
   $sql = "SELECT * FROM learnhunter";
+}
+else{  
+    $sql = "SELECT * FROM learnhunter where id= '".$data."'";
+  }
   $result = mysqli_query($conn, $sql);
 
   if (mysqli_num_rows($result) > 0) {
