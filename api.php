@@ -7,7 +7,8 @@ header('content-type: application/json');
 
    switch ( $request) {
    	case 'GET':
-   		getmethod();
+    $data = $_GET['id'];
+   		getmethod($data);
    	break;
    	case 'PUT':
           $data=json_decode(file_get_contents('php://input'),true);
@@ -27,9 +28,14 @@ header('content-type: application/json');
    		break;
    }
 //data read part are here
-function getmethod(){
+function getmethod($data){
   include "db.php";
+  if($data == ''){ 
   $sql = "SELECT * FROM learnhunter";
+}
+else{  
+    $sql = "SELECT * FROM learnhunter where id= '".$data."'";
+  }
   $result = mysqli_query($conn, $sql);
 
   if (mysqli_num_rows($result) > 0) {
@@ -49,8 +55,8 @@ function postmethod($data){
    include "db.php";
    $name=$data["name"];
    $email=$data["email"];
-
-   $sql= "INSERT INTO learnhunter(name,email,created_at) VALUES ('$name' , '$email', NOW())";
+   $mobile= $data["mobile"];
+   $sql= "INSERT INTO learnhunter(name,email,mobile,created_at) VALUES ('$name' , '$email' , '$mobile', NOW())";
 
    if (mysqli_query($conn , $sql)) {
       echo '{"result": "data inserted"}';
@@ -69,8 +75,8 @@ function putmethod($data){
    $id=$data["id"];
    $name=$data["name"];
    $email=$data["email"];
-
-   $sql= "UPDATE learnhunter SET name='$name', email='$email', created_at=NOW() where id='$id'  ";
+$mobile= $data["mobile"];
+   $sql= "UPDATE learnhunter SET name='".$name."', email='".$email."',mobile='".$mobile."', created_at=NOW() where id='".$id."'  ";
 
    if (mysqli_query($conn , $sql)) {
       echo '{"result": "Update Succesfully"}';
